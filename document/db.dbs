@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="MySql" id="Project_42ffbe9" template="Default" database="MySql" >
+	<schema name="oauth" catalogname="oauth" >
+		<table name="group" >
+			<comment><![CDATA[群組]]></comment>
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" >
+				<comment><![CDATA[流水號]]></comment>
+			</column>
+			<column name="name" type="varchar" length="50" jt="12" mandatory="y" >
+				<comment><![CDATA[名字]]></comment>
+			</column>
+			<index name="pk_group" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_group" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="map_group_role" >
+			<comment><![CDATA[群組角色對應]]></comment>
+			<column name="group_id" type="int" length="10" decimal="0" jt="4" mandatory="y" >
+				<comment><![CDATA[群組ID]]></comment>
+			</column>
+			<column name="role_id" type="int" length="10" decimal="0" jt="4" mandatory="y" >
+				<comment><![CDATA[角色ID]]></comment>
+			</column>
+			<index name="pk_map_group_role" unique="PRIMARY_KEY" >
+				<column name="group_id" />
+				<column name="role_id" />
+			</index>
+			<index name="idx_map_group_role" unique="NORMAL" >
+				<column name="group_id" />
+			</index>
+			<index name="idx_map_group_role_0" unique="NORMAL" >
+				<column name="role_id" />
+			</index>
+			<fk name="fk_map_group_role_group" to_schema="oauth" to_table="group" delete_action="cascade" update_action="cascade" >
+				<fk_column name="group_id" pk="id" />
+			</fk>
+			<fk name="fk_map_group_role_role" to_schema="oauth" to_table="role" delete_action="cascade" update_action="cascade" >
+				<fk_column name="role_id" pk="id" />
+			</fk>
+		</table>
+		<table name="map_user_group" >
+			<comment><![CDATA[使用者群組對應]]></comment>
+			<column name="user_id" type="int" jt="4" mandatory="y" >
+				<comment><![CDATA[使用者ID]]></comment>
+			</column>
+			<column name="group_id" type="int" jt="4" mandatory="y" >
+				<comment><![CDATA[群組ID]]></comment>
+			</column>
+			<index name="pk_map_user_group" unique="PRIMARY_KEY" >
+				<column name="user_id" />
+				<column name="group_id" />
+			</index>
+			<index name="idx_map_user_group" unique="NORMAL" >
+				<column name="user_id" />
+			</index>
+			<index name="idx_map_user_group_0" unique="NORMAL" >
+				<column name="group_id" />
+			</index>
+			<fk name="fk_map_user_group_user" to_schema="oauth" to_table="user" delete_action="cascade" update_action="cascade" >
+				<fk_column name="user_id" pk="id" />
+			</fk>
+			<fk name="fk_map_user_group_group" to_schema="oauth" to_table="group" delete_action="restrict" update_action="cascade" >
+				<fk_column name="group_id" pk="id" />
+			</fk>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="role" >
+			<comment><![CDATA[角色]]></comment>
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" >
+				<comment><![CDATA[流水號]]></comment>
+			</column>
+			<column name="name" type="varchar" length="50" jt="12" >
+				<comment><![CDATA[命名]]></comment>
+			</column>
+			<index name="pk_role" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_role" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+		<table name="user" >
+			<comment><![CDATA[使用者基本資訊]]></comment>
+			<column name="id" type="int" jt="4" mandatory="y" autoincrement="y" >
+				<comment><![CDATA[流水號]]></comment>
+			</column>
+			<column name="username" type="varchar" length="50" jt="12" mandatory="y" >
+				<comment><![CDATA[帳號]]></comment>
+			</column>
+			<column name="password" type="varchar" length="50" jt="12" mandatory="y" >
+				<comment><![CDATA[密碼]]></comment>
+			</column>
+			<column name="locked" type="boolean" jt="-7" mandatory="y" >
+				<defo>0</defo>
+				<comment><![CDATA[帳號是否被鎖]]></comment>
+			</column>
+			<column name="enable" type="boolean" jt="-7" mandatory="y" >
+				<defo>1</defo>
+				<comment><![CDATA[帳號是否啟用]]></comment>
+			</column>
+			<column name="expired_date" type="datetime" jt="93" >
+				<comment><![CDATA[過期時間]]></comment>
+			</column>
+			<column name="pwd_expired_date" type="datetime" jt="93" >
+				<comment><![CDATA[密碼過期時間]]></comment>
+			</column>
+			<column name="name" type="varchar" length="50" jt="12" >
+				<comment><![CDATA[名字]]></comment>
+			</column>
+			<index name="pk_user" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="idx_user" unique="UNIQUE" >
+				<column name="username" />
+			</index>
+			<storage><![CDATA[engine=InnoDB]]></storage>
+		</table>
+	</schema>
+	<connector name="MySql" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-5.1.40-bin.jar" driver_desc="Standard" host="localhost" port="3306" instance="oauth" user="root" passwd="bXlzcWw=" />
+	<layout name="Default Layout" id="Layout_17f6d44" show_relation="columns" >
+		<entity schema="oauth" name="map_user_group" color="ccffcc" x="304" y="160" />
+		<entity schema="oauth" name="role" color="c1d8ee" x="448" y="160" />
+		<entity schema="oauth" name="map_group_role" color="ccffcc" x="416" y="352" />
+		<entity schema="oauth" name="group" color="c1d8ee" x="320" y="352" />
+		<entity schema="oauth" name="user" color="c1d8ee" x="128" y="160" />
+		<callout x="48" y="48" pointer="NO" >
+			<comment><![CDATA[For a better understanding of the schema create multiple layouts with the same or different tables.
+Create new tables by right-clicking the layout, new foreign keys by drag and drop of one column over a primary key column.
+Double-click or right-click any table, column,... to edit.]]></comment>
+		</callout>
+	</layout>
+</project>

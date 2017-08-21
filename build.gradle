@@ -1,0 +1,100 @@
+group 'com.endsound'
+version '1.0'
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'idea'
+
+sourceCompatibility = 1.8
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '+'
+
+    //tomcat
+    providedCompile 'org.apache.tomcat:tomcat-catalina:8.5.16'
+
+    //spring
+    compile group: 'org.springframework', name: 'spring-webmvc', version: '+'
+    compile group: 'org.springframework.security', name: 'spring-security-web', version: '+'
+    compile group: 'org.springframework.security', name: 'spring-security-config', version: '+'
+
+    //log4j
+    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '+'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '+'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-web', version: '+'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '+'
+    compile group: 'org.apache.logging.log4j', name: 'log4j-jcl', version: '+'
+    compile group: 'org.slf4j', name: 'slf4j-api', version: '+'
+
+
+    //jwt
+    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '+'
+
+    //gson
+    compile group: 'com.google.code.gson', name: 'gson', version: '+'
+
+    //apache common
+    compile group: 'commons-io', name: 'commons-io', version: '+'
+
+    //jooq
+    compile group: 'org.jooq', name: 'jooq', version: '+'
+    compile group: 'org.jooq', name: 'jooq-codegen', version: '+'
+    compile group: 'org.apache.commons', name: 'commons-dbcp2', version: '+'
+    compile group: 'mysql', name: 'mysql-connector-java', version: '6.0.6'
+    compile group: 'org.springframework', name: 'spring-jdbc', version: '+'
+
+}
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'org.jooq:jooq-codegen:+'
+        classpath 'mysql:mysql-connector-java:6.0.6'
+    }
+}
+
+task jooqGen {
+    doLast {
+        def writer = new StringWriter()
+        def xml = new groovy.xml.MarkupBuilder(writer)
+                .configuration('xmlns': 'http://www.jooq.org/xsd/jooq-codegen-3.9.2.xsd') {
+            jdbc() {
+                driver(db_driver)
+                url(db_url)
+                user(db_username)
+                password(db_password)
+            }
+            generator() {
+                database() {
+                    inputSchema('oauth')
+                }
+
+                // Watch out for this caveat when using MarkupBuilder with "reserved names"
+                // - https://github.com/jOOQ/jOOQ/issues/4797
+                // - http://stackoverflow.com/a/11389034/521799
+                // - https://groups.google.com/forum/#!topic/jooq-user/wi4S9rRxk4A
+                generate([:]) {
+                    pojos true
+                    daos true
+                }
+                target() {
+                    packageName('org.jooq')
+                    directory('src/main/java')
+                }
+            }
+        }
+        // Run the code generator
+        org.jooq.util.GenerationTool.generate(
+                javax.xml.bind.JAXB.unmarshal(new StringReader(writer.toString()), org.jooq.util.jaxb.Configuration.class)
+        )
+    }
+}
+
