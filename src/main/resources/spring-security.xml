@@ -6,9 +6,10 @@
 
     <!--security for backend-->
     <sec:http pattern="/backend/api/**"
-              entry-point-ref="restAuthenticationEntryPoint"
+              entry-point-ref="jwtAuthenticationEntryPoint"
               create-session="stateless">
         <sec:cors configuration-source-ref="corsSource"/>
+        <sec:custom-filter before="PRE_AUTH_FILTER" ref="jwtExceptionFilter"/>
         <sec:custom-filter after="PRE_AUTH_FILTER" ref="jwtAuthenticationTokenFilter"/>
         <sec:csrf disabled="true"/>
     </sec:http>
