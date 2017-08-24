@@ -33,6 +33,7 @@ public class JwtAuthenticationTokenFilter extends GenericFilterBean {
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest httpServletRequest = (HttpServletRequest)request;
+        HttpServletResponse httpServletResponse = (HttpServletResponse) response;
         try {
             Optional.ofNullable(httpServletRequest.getHeader(TOKEN_HEADER_KEY))
                     .map(jwtToken -> jwtUtil.parseToken(jwtToken))
@@ -52,7 +53,8 @@ public class JwtAuthenticationTokenFilter extends GenericFilterBean {
                         //refresh token
                         Timestamp current = Timestamp.from(Instant.now());
                         if (current.after(userDetail.getRefresh())) {
-                            ((HttpServletResponse) response).setHeader(TOKEN_HEADER_KEY, jwtUtil.generateToken(userDetail));
+                            httpServletResponse.setHeader(TOKEN_HEADER_KEY, jwtUtil.generateToken(userDetail));
+                            httpServletResponse.setHeader("Access-Control-Expose-Headers", TOKEN_HEADER_KEY);
                         }
                     });
         } catch (ExpiredJwtException e) {
