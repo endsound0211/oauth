@@ -10,6 +10,11 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
+
+
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.Base64;
 import java.util.Optional;
 
 
@@ -23,8 +28,15 @@ public class JwtAuthenticationProvider implements AuthenticationProvider {
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         JwtAuthenticationToken token = (JwtAuthenticationToken)authentication;
         String username = token.getPrincipal().toString();
-        String password = token.getCredentials().toString();
+        //md5
+        String password = "";
+        try {
+            password = Base64.getEncoder().encodeToString(MessageDigest.getInstance("MD5").digest(token.getCredentials().toString().getBytes()));
+        } catch (NoSuchAlgorithmException e) {
+            throw new UserNotFoundException();
+        }
 
+        //authenticate
         JwtUserDetail userDetail = Optional.ofNullable(userDetailService.loadUserByUsername(username))
                 .orElseThrow(() -> new UserNotFoundException());
 

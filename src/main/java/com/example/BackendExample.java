@@ -11,7 +11,7 @@ import java.util.Map;
 @RestController
 @RequestMapping("/backend/api")
 public class BackendExample {
-    @PreAuthorize("hasRole('ROLE_BACKEND')")
+    @PreAuthorize("hasRole('ROLE_ADMINISTRATOR')")
     @GetMapping("")
     public Map<String, Object> Hello(){
         Map<String, Object> ob= new HashMap<String, Object>();
