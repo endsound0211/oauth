@@ -9,6 +9,7 @@
               entry-point-ref="jwtAuthenticationEntryPoint"
               create-session="stateless">
         <sec:cors configuration-source-ref="corsSource"/>
+        <sec:access-denied-handler ref="jwtAccessDeniedHandler"/>
         <sec:custom-filter before="PRE_AUTH_FILTER" ref="jwtExceptionFilter"/>
         <sec:custom-filter after="PRE_AUTH_FILTER" ref="jwtAuthenticationTokenFilter"/>
         <sec:csrf disabled="true"/>

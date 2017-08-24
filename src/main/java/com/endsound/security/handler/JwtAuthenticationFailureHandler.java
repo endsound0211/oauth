@@ -17,8 +17,8 @@ import java.util.Optional;
 
 
 @Component
-public class jwtAuthenticationFailureHandler implements AuthenticationFailureHandler {
-    private final static Logger logger = LogManager.getLogger(jwtAuthenticationFailureHandler.class);
+public class JwtAuthenticationFailureHandler implements AuthenticationFailureHandler {
+    private final static Logger logger = LogManager.getLogger(JwtAuthenticationFailureHandler.class);
 
     @Value("${jwt.username.key:username}")
     private String USERNAME_KEY;

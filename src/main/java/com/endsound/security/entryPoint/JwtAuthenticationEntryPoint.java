@@ -22,6 +22,12 @@ public class JwtAuthenticationEntryPoint implements AuthenticationEntryPoint {
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException authException) throws IOException, ServletException {
         Map<String, Object> body = new HashMap<String, Object>();
         body.put("message", authException.getMessage());
+
+        logger.error(String.format("401 - IP: %s, Path: %s, Message: %s",
+                request.getRemoteAddr(),
+                request.getServletPath(),
+                authException.getMessage()));
+
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         response.setContentType(MediaType.APPLICATION_JSON_UTF8_VALUE);
         response.getWriter().print(new Gson().toJson(body));
