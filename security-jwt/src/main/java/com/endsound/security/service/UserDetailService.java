@@ -1,7 +1,7 @@
 package com.endsound.security.service;
 
-import com.endsound.dao.RoleDao;
-import com.endsound.dao.UserDao;
+import com.endsound.security.dao.RoleDao;
+import com.endsound.security.dao.UserDao;
 import com.endsound.security.entity.JwtGrantedAuthority;
 import com.endsound.security.entity.JwtUserDetail;
 import org.jooq.tables.pojos.User;

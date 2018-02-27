@@ -13,33 +13,9 @@ repositories {
 
 dependencies {
     testCompile group: 'junit', name: 'junit', version: '+'
+    compile project(':core')
     compile project(':db')
-
-    //tomcat
-    providedCompile 'org.apache.tomcat:tomcat-catalina:8.5.16'
-
-    //spring
-    compile group: 'org.springframework', name: 'spring-webmvc', version: '+'
-    compile group: 'org.springframework.security', name: 'spring-security-web', version: '+'
-    compile group: 'org.springframework.security', name: 'spring-security-config', version: '+'
-
-    //log4j
-    compile group: 'org.apache.logging.log4j', name: 'log4j-core', version: '+'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-api', version: '+'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-web', version: '+'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-slf4j-impl', version: '+'
-    compile group: 'org.apache.logging.log4j', name: 'log4j-jcl', version: '+'
-    compile group: 'org.slf4j', name: 'slf4j-api', version: '+'
-
-
-    //jwt
-    compile group: 'io.jsonwebtoken', name: 'jjwt', version: '+'
-
-    //gson
-    compile group: 'com.google.code.gson', name: 'gson', version: '+'
-
-    //apache common
-    compile group: 'commons-io', name: 'commons-io', version: '+'
+    compile project(':security-jwt')
 
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.4'

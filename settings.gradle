@@ -1,4 +1,6 @@
 rootProject.name = 'oauth'
 
 include 'db'
+include 'security-jwt'
+include 'core'
 

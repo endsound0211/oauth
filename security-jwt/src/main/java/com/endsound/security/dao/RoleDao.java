@@ -1,4 +1,4 @@
-package com.endsound.dao;
+package com.endsound.security.dao;
 
 import org.jooq.Configuration;
 import org.jooq.Tables;

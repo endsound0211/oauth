@@ -1,4 +1,4 @@
-package com.endsound.dao;
+package com.endsound.security.dao;
 
 import com.endsound.security.entity.JwtUserDetail;
 import org.jooq.Configuration;
