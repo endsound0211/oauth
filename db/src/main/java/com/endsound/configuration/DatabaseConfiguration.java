@@ -1,5 +1,6 @@
 package com.endsound.configuration;
 
+import com.endsound.jooq.JooqListener;
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.jooq.SQLDialect;
 import org.jooq.impl.DataSourceConnectionProvider;
@@ -61,12 +62,12 @@ public class DatabaseConfiguration implements TransactionManagementConfigurer{
         DefaultConfiguration configuration = new DefaultConfiguration();
         configuration.setSQLDialect(SQLDialect.valueOf(sqlDialect));
         configuration.setConnectionProvider(connectionProvider());
-        configuration.setExecuteListenerProvider(new DefaultExecuteListenerProvider(new DefaultExecuteListener()));
+        configuration.setExecuteListenerProvider(new DefaultExecuteListenerProvider(new JooqListener()));
         return configuration;
     }
 
     @Override
     public PlatformTransactionManager annotationDrivenTransactionManager() {
-        return null;
+        return transactionManager();
     }
 }
