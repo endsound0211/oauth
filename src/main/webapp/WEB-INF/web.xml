@@ -11,8 +11,7 @@
             <param-name>contextConfigLocation</param-name>
             <param-value>
                 classpath:dispatch-servlet.xml,
-                classpath:spring-security.xml,
-                classpath:database.xml
+                classpath:spring-security.xml
             </param-value>
         </init-param>
     </servlet>

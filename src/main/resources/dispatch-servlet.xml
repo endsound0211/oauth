@@ -7,10 +7,8 @@
 
     <context:component-scan base-package="
         com.example,
-        com.endsound.security,
-        com.endsound.dao,
-        com.endsound.handler"/>
-    <context:property-placeholder location="classpath:config.properties"/>
+        com.endsound"/>
+    <context:property-placeholder location="classpath:*.properties"/>
     <mvc:default-servlet-handler/>
     <mvc:annotation-driven/>
 </beans>

@@ -40,6 +40,9 @@ dependencies {
 
     //apache common
     compile group: 'commons-io', name: 'commons-io', version: '+'
+
+    // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.4'
 }
 
 buildscript {
