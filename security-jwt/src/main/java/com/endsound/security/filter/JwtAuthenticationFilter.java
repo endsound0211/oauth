@@ -23,7 +23,7 @@ public class JwtAuthenticationFilter extends AbstractAuthenticationProcessingFil
     @Value("${jwt.password.key:password}")
     private String PASSWORD_KEY;
 
-    protected JwtAuthenticationFilter() {
+    public JwtAuthenticationFilter() {
         super(new AntPathRequestMatcher("/jwt/login", "POST"));
     }
 
