@@ -33,7 +33,6 @@ public class JwtAuthenticationSuccessHandler implements AuthenticationSuccessHan
         logger.info(String.format("%s 登入成功", authentication.getPrincipal()));
         JwtUserDetail userDetail = (JwtUserDetail) authentication.getDetails();
 
-        //TODO set audience
         //set jwt info
         userDetail.setSubject(userDetail.getUsername())
                 .setIssuer(request.getServerName())

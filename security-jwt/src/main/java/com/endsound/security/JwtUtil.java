@@ -75,4 +75,11 @@ public class JwtUtil {
                 .signWith(SignatureAlgorithm.HS512, securityKey)
                 .compact();
     }
+
+    public Claims parseCommonToken(String token){
+        return Jwts.parser()
+                .setSigningKey(securityKey)
+                .parseClaimsJws(token)
+                .getBody();
+    }
 }

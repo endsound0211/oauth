@@ -39,8 +39,8 @@ public class JwtAuthenticationTokenFilter extends GenericFilterBean {
                     .map(jwtToken -> jwtUtil.parseToken(jwtToken))
                     .ifPresent(userDetail -> {
                         //audience che
-                        if (!httpServletRequest.getHeader("origin").equals(userDetail.getAudience()))
-                            throw new TokenErrorException();
+//                        if (!httpServletRequest.getHeader("origin").equals(userDetail.getAudience()))
+//                            throw new TokenErrorException();
                         //set security context
                         JwtAuthenticationToken token = new JwtAuthenticationToken(
                                 userDetail.getUsername(),
