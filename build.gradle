@@ -16,6 +16,7 @@ dependencies {
     compile project(':core')
     compile project(':db')
     compile project(':security-jwt')
+    compile project(':error-handler')
 
     // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.4'
