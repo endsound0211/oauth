@@ -46,10 +46,18 @@ dependencies {
     // apache common
     // https://mvnrepository.com/artifact/commons-io/commons-io
     compile group: 'commons-io', name: 'commons-io', version: '2.6'
+    // https://mvnrepository.com/artifact/org.apache.commons/commons-lang3
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.7'
+
 
     // aspectj
     // https://mvnrepository.com/artifact/org.aspectj/aspectjweaver
     compile group: 'org.aspectj', name: 'aspectjweaver', version: '1.8.13'
+
+    //jool
+    // https://mvnrepository.com/artifact/org.jooq/jool
+    compile group: 'org.jooq', name: 'jool', version: '0.9.12'
+
 
 
 }
