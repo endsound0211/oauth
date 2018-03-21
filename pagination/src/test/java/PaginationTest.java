@@ -134,4 +134,30 @@ public class PaginationTest {
 
         Assert.assertThat(page.getRows(), everyItem(hasProperty("id", lessThanOrEqualTo(2))));
     }
+
+    @Test
+    public void gtQueryTest() throws Exception {
+        GtQuery gtQuery = new GtQuery().setId(1);
+        PageParam pageParam = new PageParam()
+                .setLimit(10)
+                .setOffset(0)
+                .setQuery(new Gson().toJson(gtQuery));
+
+        Page<User> page = userDao.queryTest(pageParam, GtQuery.class);
+
+        Assert.assertThat(page.getRows(), everyItem(hasProperty("id", greaterThan(1))));
+    }
+
+    @Test
+    public void geQueryTest() throws Exception {
+        GeQuery geQuery = new GeQuery().setId(2);
+        PageParam pageParam = new PageParam()
+                .setLimit(10)
+                .setOffset(0)
+                .setQuery(new Gson().toJson(geQuery));
+
+        Page<User> page = userDao.queryTest(pageParam, GeQuery.class);
+
+        Assert.assertThat(page.getRows(), everyItem(hasProperty("id", greaterThanOrEqualTo(2))));
+    }
 }
