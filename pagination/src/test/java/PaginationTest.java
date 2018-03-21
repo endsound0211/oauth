@@ -95,4 +95,18 @@ public class PaginationTest {
 
         Assert.assertThat(page.getRows(), everyItem(hasProperty("id", not(isIn(Arrays.asList(1, 3))))));
     }
+
+    @Test
+    public void notLikeQueryTest() throws Exception {
+        NotLikeQuery notLikeQuery = new NotLikeQuery().setUsername("nds");
+        PageParam pageParam = new PageParam()
+                .setLimit(10)
+                .setOffset(0)
+                .setQuery(new Gson().toJson(notLikeQuery));
+
+        Page<User> page = userDao.queryTest(pageParam, NotLikeQuery.class);
+
+        Assert.assertThat(page.getRows(), everyItem(hasProperty("username", not(containsString("nds")))));
+    }
+
 }
