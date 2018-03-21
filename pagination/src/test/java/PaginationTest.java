@@ -1,8 +1,5 @@
 
-import bean.EqQuery;
-import bean.InQuery;
-import bean.LikeQuery;
-import bean.NeQuery;
+import bean.*;
 import com.endsound.pagination.bean.Page;
 import com.endsound.pagination.bean.PageParam;
 import com.google.gson.Gson;
@@ -83,5 +80,19 @@ public class PaginationTest {
 
         Assert.assertThat(page.getRows(), everyItem(hasProperty("id", not(1))));
 
+    }
+
+    @Test
+    public void notInQueryTest(){
+        NotInQuery notInQuery = new NotInQuery().setId(Arrays.asList(1, 3));
+
+        PageParam pageParam = new PageParam()
+                .setLimit(10)
+                .setOffset(0)
+                .setQuery(new Gson().toJson(notInQuery));
+
+        Page<User> page = userDao.queryTest(pageParam, NotInQuery.class);
+
+        Assert.assertThat(page.getRows(), everyItem(hasProperty("id", not(isIn(Arrays.asList(1, 3))))));
     }
 }
