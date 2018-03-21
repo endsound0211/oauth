@@ -2,6 +2,7 @@
 import bean.EqQuery;
 import bean.InQuery;
 import bean.LikeQuery;
+import bean.NeQuery;
 import com.endsound.pagination.bean.Page;
 import com.endsound.pagination.bean.PageParam;
 import com.google.gson.Gson;
@@ -66,5 +67,21 @@ public class PaginationTest {
         Page<User> page = userDao.queryTest(pageParam, LikeQuery.class);
 
         Assert.assertThat(page.getRows(), everyItem(hasProperty("username", containsString("nds"))));
+    }
+
+    @Test
+    public void neQueryTest() throws Exception {
+        NeQuery neQuery = new NeQuery().setId(1);
+
+        PageParam pageParam = new PageParam()
+                .setLimit(10)
+                .setOffset(0)
+                .setQuery(new Gson().toJson(neQuery));
+
+
+        Page<User> page = userDao.queryTest(pageParam, NeQuery.class);
+
+        Assert.assertThat(page.getRows(), everyItem(hasProperty("id", not(1))));
+
     }
 }
