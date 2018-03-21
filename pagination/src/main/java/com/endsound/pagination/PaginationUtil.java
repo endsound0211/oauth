@@ -26,7 +26,8 @@ public class PaginationUtil {
             new LtProvider(),
             new LeProvider(),
             new GtProvider(),
-            new GeProvider()
+            new GeProvider(),
+            new BetweenProvider()
     );
 
     protected static Condition genCondition(Object queryObject, Table table) {

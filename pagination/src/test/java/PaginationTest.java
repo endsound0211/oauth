@@ -1,5 +1,6 @@
 
 import bean.*;
+import com.endsound.pagination.bean.BetweenParam;
 import com.endsound.pagination.bean.Page;
 import com.endsound.pagination.bean.PageParam;
 import com.google.gson.Gson;
@@ -159,5 +160,18 @@ public class PaginationTest {
         Page<User> page = userDao.queryTest(pageParam, GeQuery.class);
 
         Assert.assertThat(page.getRows(), everyItem(hasProperty("id", greaterThanOrEqualTo(2))));
+    }
+
+    @Test
+    public void betweenQueryTest() throws Exception{
+        BetweenQuery betweenQuery = new BetweenQuery().setId(new BetweenParam<Integer>().setStart(1).setEnd(2));
+        PageParam pageParam = new PageParam()
+                .setLimit(10)
+                .setOffset(0)
+                .setQuery(new Gson().toJson(betweenQuery));
+
+        Page<User> page = userDao.queryTest(pageParam, BetweenQuery.class);
+
+        Assert.assertThat(page.getRows(), everyItem(hasProperty("id", isIn(Arrays.asList(1, 2)))));
     }
 }
