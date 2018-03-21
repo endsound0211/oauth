@@ -174,4 +174,17 @@ public class PaginationTest {
 
         Assert.assertThat(page.getRows(), everyItem(hasProperty("id", isIn(Arrays.asList(1, 2)))));
     }
+
+    @Test
+    public void notBetweenQueryTest() throws Exception{
+        NotBetweenQuery notBetweenQuery = new NotBetweenQuery().setId(new BetweenParam<Integer>().setStart(1).setEnd(2));
+        PageParam pageParam = new PageParam()
+                .setLimit(10)
+                .setOffset(0)
+                .setQuery(new Gson().toJson(notBetweenQuery));
+
+        Page<User> page = userDao.queryTest(pageParam, NotBetweenQuery.class);
+
+        Assert.assertThat(page.getRows(), everyItem(hasProperty("id", not(isIn(Arrays.asList(1, 2))))));
+    }
 }
