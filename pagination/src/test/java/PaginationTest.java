@@ -1,6 +1,7 @@
 
 import bean.EqQuery;
 import bean.InQuery;
+import bean.LikeQuery;
 import com.endsound.pagination.bean.Page;
 import com.endsound.pagination.bean.PageParam;
 import com.google.gson.Gson;
@@ -51,6 +52,19 @@ public class PaginationTest {
 
         Page<User> page = userDao.queryTest(pageParam, InQuery.class);
 
-        Assert.assertThat(page.getRows(), everyItem(hasProperty("id", anyOf(is(1), is(3)))));
+        Assert.assertThat(page.getRows(), everyItem(hasProperty("id", isIn(Arrays.asList(1, 3)))));
+    }
+
+    @Test
+    public void likeQueryTest() throws Exception {
+        LikeQuery likeQuery = new LikeQuery().setUsername("nds");
+        PageParam pageParam = new PageParam()
+                .setLimit(10)
+                .setOffset(0)
+                .setQuery(new Gson().toJson(likeQuery));
+
+        Page<User> page = userDao.queryTest(pageParam, LikeQuery.class);
+
+        Assert.assertThat(page.getRows(), everyItem(hasProperty("username", containsString("nds"))));
     }
 }

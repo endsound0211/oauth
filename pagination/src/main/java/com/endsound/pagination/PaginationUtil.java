@@ -8,6 +8,7 @@ import com.endsound.pagination.exception.FieldNotFoundException;
 import com.endsound.pagination.exception.PageQueryPolicyNotSetException;
 import com.endsound.pagination.provider.EqProvider;
 import com.endsound.pagination.provider.InProvider;
+import com.endsound.pagination.provider.LikeProvider;
 import com.endsound.pagination.provider.QueryConditionProvider;
 import org.jooq.Condition;
 import org.jooq.Table;
@@ -20,7 +21,8 @@ import java.util.stream.Collectors;
 public class PaginationUtil {
     private static List<QueryConditionProvider> providers = Arrays.asList(
             new EqProvider(),
-            new InProvider()
+            new InProvider(),
+            new LikeProvider()
     );
 
     protected static Condition genCondition(Object queryObject, Table table) {
