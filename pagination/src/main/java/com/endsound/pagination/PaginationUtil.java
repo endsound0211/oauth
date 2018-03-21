@@ -22,7 +22,9 @@ public class PaginationUtil {
             new LikeProvider(),
             new NeProvider(),
             new NotInProvider(),
-            new NotLikeProvider()
+            new NotLikeProvider(),
+            new LtProvider(),
+            new LeProvider()
     );
 
     protected static Condition genCondition(Object queryObject, Table table) {

@@ -109,4 +109,29 @@ public class PaginationTest {
         Assert.assertThat(page.getRows(), everyItem(hasProperty("username", not(containsString("nds")))));
     }
 
+    @Test
+    public void ltQueryTest() throws Exception {
+        LtQuery ltQuery = new LtQuery().setId(3);
+        PageParam pageParam = new PageParam()
+                .setLimit(10)
+                .setOffset(0)
+                .setQuery(new Gson().toJson(ltQuery));
+
+        Page<User> page = userDao.queryTest(pageParam, LtQuery.class);
+
+        Assert.assertThat(page.getRows(), everyItem(hasProperty("id", lessThan(3))));
+    }
+
+    @Test
+    public void leQueryTest() throws Exception {
+        LeQuery leQuery = new LeQuery().setId(2);
+        PageParam pageParam = new PageParam()
+                .setLimit(10)
+                .setOffset(0)
+                .setQuery(new Gson().toJson(leQuery));
+
+        Page<User> page = userDao.queryTest(pageParam, LeQuery.class);
+
+        Assert.assertThat(page.getRows(), everyItem(hasProperty("id", lessThanOrEqualTo(2))));
+    }
 }
